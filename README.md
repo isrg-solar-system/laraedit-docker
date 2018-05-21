@@ -1,3 +1,5 @@
+## remeber to restart php 
+service php7.1-fpm restart
 # laraedit-docker [![GitHub issues](https://img.shields.io/github/issues/laraedit/laraedit-docker.svg)](https://github.com/laraedit/laraedit-docker/issues) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/laraedit/laraedit-docker/master/LICENSE) [![GitHub forks](https://img.shields.io/github/forks/laraedit/laraedit-docker.svg)](https://github.com/laraedit/laraedit-docker/network) [![GitHub stars](https://img.shields.io/github/stars/laraedit/laraedit-docker.svg)](https://github.com/laraedit/laraedit-docker/stargazers)
 Dockerized version of Laravel Homestead
 

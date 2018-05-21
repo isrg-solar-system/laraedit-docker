@@ -54,6 +54,10 @@ VOLUME ["/var/www/html/app"]
 VOLUME ["/var/cache/nginx"]
 VOLUME ["/var/log/nginx"]
 
+
+RUN apt-get update
+RUN apt-get autoremove
+
 # install php
 RUN apt-get install -y --force-yes php7.1-fpm php7.1-cli php7.1-dev php7.1-pgsql php7.1-sqlite3 php7.1-gd \
     php-apcu php7.1-curl php7.1-mcrypt php7.1-imap php7.1-mysql php7.1-readline php-xdebug php-common \
@@ -74,7 +78,7 @@ RUN sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.1/cli/ph
     sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" /etc/php/7.1/fpm/pool.d/www.conf && \
     sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" /etc/php/7.1/fpm/pool.d/www.conf && \
     sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" /etc/php/7.1/fpm/pool.d/www.conf && \
-    sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php/7.1/fpm/pool.d/www.conf && \
+    sed -i -e "s/;listen.mode = 0660/listen.mode = 0660/g" /etc/php/7.1/fpm/pool.d/www.conf && \
     find /etc/php/7.1/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 COPY fastcgi_params /etc/nginx/
 RUN phpenmod mcrypt && \
@@ -144,6 +148,8 @@ RUN apt-get remove --purge -y software-properties-common && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /usr/share/man/?? && \
     rm -rf /usr/share/man/??_*
+
+RUN service php7.1-fpm start
 
 # expose ports
 EXPOSE 80 443 3306 6379
